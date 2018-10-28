@@ -1,0 +1,58 @@
+server: 
+  port: 8083
+  tomcat: 
+    uri-encoding: UTF-8
+eureka: 
+  instance: 
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10  # 发呆时间，即服务续约到期时间（缺省为90s）
+    #instance-id: ${spring.application.name}                       # 修改显示的微服务名为：应用名称
+    #instance-id: ${spring.cloud.client.ipAddress}:${server.port}  # 修改显示的微服务名为：IP:端口
+  client: 
+    #healthcheck:
+    #enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+    #register-with-eureka: true
+    #fetch-registry: true
+    registerWithEureka: true
+    fetchRegistry: true
+    healthcheck:
+      enabled: false
+    serviceUrl: 
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://127.0.0.1:8081/eureka
+spring: 
+  application: 
+    name: SpringClient
+  datasource: 
+    url: jdbc:mysql://localhost:3306/cubedb
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    max-idle: 10
+    min-idle: 5    
+    max-wait: 10000
+    max-active: 100
+    initial-size: 5
+  jpa:
+    properties: 
+      hibernate: 
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  http: 
+    encoding: 
+      force: true
+      charset: UTF-8
+      enabled: true
+mybatis: 
+  mapperLocations: classpath:mappers/*.xml
+security: 
+  basic: 
+    enabled: false
+  user: 
+    name: admin
+    password: 123456
